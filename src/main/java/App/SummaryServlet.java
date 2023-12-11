@@ -1,19 +1,21 @@
 package App;
 
-import App.model.Expense;
+import App.model.Transaction;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebInitParam;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 
+@WebServlet(value = "/summary", initParams = {@WebInitParam(name = "rent", value = "30")}, loadOnStartup = 0)
 public class SummaryServlet extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -23,12 +25,11 @@ public class SummaryServlet extends HttpServlet {
         int salary = Integer.parseInt(context.getInitParameter("salary"));
         int rent = Integer.parseInt(config.getInitParameter("rent"));
 
-        List<Expense> expenseList = new ArrayList<>();
-        expenseList.add(new Expense("rent", rent));
+        List<Transaction> transactionList = new ArrayList<>();
+        transactionList.add(new Transaction("salary", salary));
+        transactionList.add(new Transaction("rent", rent * -1));
 
-
-        context.setAttribute("freeMoney", salary - rent);
-        context.setAttribute("expenseList", expenseList);
+        context.setAttribute("transactionList", transactionList);
     }
 
     @Override
@@ -36,13 +37,6 @@ public class SummaryServlet extends HttpServlet {
         ServletContext context = req.getServletContext();
         context.log("[SummaryServlet] doGet");
 
-        HttpSession session = req.getSession(false);
-        if (session == null) {
-            resp.getWriter().println("Not authorised");
-            return;
-        }
-
         req.getRequestDispatcher("/details").include(req, resp);
-        resp.getWriter().println("Free money: " + context.getAttribute("freeMoney"));
     }
 }

@@ -8,47 +8,12 @@
         <param-value>100</param-value>
     </context-param>
 
-    <servlet>
-        <servlet-name>SummaryServlet</servlet-name>
-        <servlet-class>App.SummaryServlet</servlet-class>
-        <init-param>
-            <param-name>rent</param-name>
-            <param-value>30</param-value>
-        </init-param>
-        <load-on-startup>0</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>SummaryServlet</servlet-name>
-        <url-pattern>/summary</url-pattern>
-    </servlet-mapping>
-    
-    <servlet>
-        <servlet-name>ExpensesServlet</servlet-name>
-        <servlet-class>App.ExpensesServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ExpensesServlet</servlet-name>
-        <url-pattern>/expenses/add</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>DetailsServlet</servlet-name>
-        <servlet-class>App.DetailsServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>DetailsServlet</servlet-name>
-        <url-pattern>/details</url-pattern>
-    </servlet-mapping>
-
-    <filter>
-        <filter-name>ExpensesFilter</filter-name>
-        <filter-class>App.filters.ExpensesFilters</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>ExpensesFilter</filter-name>
-        <url-pattern>/expenses/add</url-pattern>
-    </filter-mapping>
-
-    <listener>
-        <listener-class>App.listeners.AttributeChangesListener</listener-class>
-    </listener>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error404</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error500</location>
+    </error-page>
 </web-app>

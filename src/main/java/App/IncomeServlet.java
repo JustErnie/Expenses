@@ -11,20 +11,20 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/details")
-public class DetailsServlet extends HttpServlet {
+@WebServlet("/income/add")
+public class IncomeServlet extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletContext context = req.getServletContext();
+        context.log("[IncomeServlet] doGet");
+        List<Transaction> transactionList = (List<Transaction>) context.getAttribute("transactionList");
 
-        int freeMoney = 0;
-        resp.getWriter().println("Transactions: ");
-        for (Transaction transaction : (List<Transaction>)context.getAttribute("transactionList")) {
-            resp.getWriter().format("%s: %s\n", transaction.getName(), transaction.getValue());
-            freeMoney += transaction.getValue();
+        for (var set : req.getParameterMap().keySet()) {
+            int value = Integer.parseInt(req.getParameter(set));
+            transactionList.add(new Transaction(set, value));
         }
-
-        context.setAttribute("freeMoney", freeMoney);
-        resp.getWriter().println("Free Money: " + freeMoney);
+        resp.getWriter().println("Incomes were added");
+        resp.sendRedirect("/summary");
     }
 }

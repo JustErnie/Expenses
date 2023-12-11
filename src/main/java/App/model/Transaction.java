@@ -1,10 +1,10 @@
 package App.model;
 
-public class Expense {
+public class Transaction {
     private final String name;
     private final double value;
 
-    public Expense(String name, double value) {
+    public Transaction(String name, double value) {
         this.name = name;
         this.value = value;
     }
@@ -19,7 +19,7 @@ public class Expense {
 
     @Override
     public String toString() {
-        return "ExpenseModel{" +
+        return "Transaction{" +
                 "name='" + name + '\'' +
                 ", value=" + value +
                 '}';

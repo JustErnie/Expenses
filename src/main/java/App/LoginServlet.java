@@ -12,14 +12,14 @@ import java.io.IOException;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
-    private final String passwd = "123456";
+    private final String passwd = "469";
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String password = req.getParameter("password");
         if (passwd.equals(password)) {
             HttpSession session = req.getSession();
-            session.setMaxInactiveInterval(10);
+            session.setMaxInactiveInterval(60);
             resp.sendRedirect("/summary");
         } else {
             resp.getWriter().println("Wrong password");
